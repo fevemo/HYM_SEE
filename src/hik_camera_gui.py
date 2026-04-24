@@ -331,6 +331,8 @@ import time
 import numpy as np
 import napari
 
+from scipy.ndimage import median_filter
+
 from pathlib import Path
 from datetime import datetime
 from tifffile import imwrite
@@ -443,8 +445,8 @@ class ControlWidget(QWidget):
 
         thr_row = QHBoxLayout()
         self.thr_slider = QSlider(Qt.Horizontal)
-        self.thr_slider.setMinimum(0)
-        self.thr_slider.setMaximum(255)
+        self.thr_slider.setMinimum(-1000)
+        self.thr_slider.setMaximum(1000)
         self.thr_slider.setValue(50)
 
         self.thr_edit = QLineEdit("50")
@@ -822,6 +824,9 @@ def launch_camera(viewer):
                 img.astype(np.int16)
                 - widget.reference.astype(np.int16)
             )
+
+            # denoise with a small median filter
+            diff = median_filter(diff, size=3)
 
             sub_layer.data = diff
 
