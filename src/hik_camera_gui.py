@@ -844,9 +844,8 @@ def launch_camera(viewer):
         widget.last_area = area
 
         new_color = "red" if area > widget.area_limit else "green"
-        if new_color != mask_state["color"]:
-            mask_layer.color = {0: "transparent", 1: new_color}
-            mask_state["color"] = new_color
+        mask_layer.color = {0: "transparent", 1: new_color}
+        mask_state["color"] = new_color
 
         widget.area_label.setText(
             f"Mask area: {area} px ({new_color})"
