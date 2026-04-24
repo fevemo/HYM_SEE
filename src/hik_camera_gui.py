@@ -825,8 +825,13 @@ def launch_camera(viewer):
 
             sub_layer.data = diff
 
-        # ---- thresholding ----
-        mask = (img < widget.threshold).astype(np.uint8)
+            # ---- thresholding on live - reference ----
+            # particles are darker than the reference -> diff is negative
+            mask = (diff < -widget.threshold).astype(np.uint8)
+        else:
+            # no reference yet: nothing to threshold
+            mask = np.zeros_like(img, dtype=np.uint8)
+
         mask_layer.data = mask
 
         area = int(mask.sum())
