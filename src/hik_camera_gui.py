@@ -496,6 +496,14 @@ class ControlWidget(QWidget):
             self.stop_pumps
         )
 
+        self.pump1_speed.editingFinished.connect(
+            self.set_pump1_speed
+        )
+
+        self.pump2_speed.editingFinished.connect(
+            self.set_pump2_speed
+        )
+
     # ======================================================
     # Camera functions
     # ======================================================
@@ -573,36 +581,46 @@ class ControlWidget(QWidget):
     # ======================================================
     # Pump functions
     # ======================================================
+    def set_pump1_speed(self):
+
+        if self.pump is None:
+            return
+
+        try:
+            speed = float(self.pump1_speed.text())
+            self.pump.set_speed(1, speed, "uL")
+        except ValueError:
+            pass
+
+    def set_pump2_speed(self):
+
+        if self.pump is None:
+            return
+
+        try:
+            speed = float(self.pump2_speed.text())
+            self.pump.set_speed(2, speed, "uL")
+        except ValueError:
+            pass
+
     def run_pump1(self):
 
         if self.pump is None:
             return
 
-        speed = float(self.pump1_speed.text())
-
-        self.pump.set_speed(1, speed, "uL")
-        self.pump.run_continuous([1],direction='B', blocking=False)
+        self.pump.run_continuous([1], direction='B', blocking=False)
 
     def run_pump2(self):
 
         if self.pump is None:
             return
 
-        speed = float(self.pump2_speed.text())
-
-        self.pump.set_speed(2, speed, "uL")
-        self.pump.run_continuous([2],direction='B', blocking=False)
+        self.pump.run_continuous([2], direction='B', blocking=False)
 
     def run_both_pumps(self):
 
         if self.pump is None:
             return
-
-        speed1 = float(self.pump1_speed.text())
-        speed2 = float(self.pump2_speed.text())
-
-        self.pump.set_speed(1, speed1, "uL")
-        self.pump.set_speed(2, speed2, "uL")
 
         self.pump.run_continuous(
             [1, 2],
