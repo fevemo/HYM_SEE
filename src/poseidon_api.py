@@ -62,7 +62,7 @@ def _to_steps(value: float, unit: str, area_mm2: float, microsteps: int) -> floa
         return _mm2steps(value, microsteps)
     if unit == "mL":
         return _mm2steps(value * 1000.0 / area_mm2, microsteps)
-    if unit == "µL":
+    if unit == "uL":
         return _mm2steps(value / area_mm2, microsteps)
     raise ValueError(f"Unknown unit '{unit}'. Use 'mm', 'mL', or 'µL'.")
 
@@ -290,15 +290,27 @@ class PoseidonController:
 
 if __name__ == "__main__":
     with PoseidonController(microsteps=32, syringe="BD 1 mL") as pump:
-        pump.set_speed(1, 1.0, "mL")
-        pump.set_accel(1, 2.0, "mL")
+        stop_delay = 1
+        for pump_id in [1, 2]:
+            pump.set_speed(pump_id, 1, "uL")
+            pump.set_accel(pump_id, 10.0, "uL")
 
-        print("\n── Fire-and-forget: start then stop after 2 s ──")
-        pump.run_continuous([1], direction="F", blocking=False)
-        time.sleep(2.0)
-        pump.stop(blocking=False)
+        for i in range(10):
+            print("Both pumps")
+            pump.run_continuous([1,2], direction="B", blocking=False)
+            time.sleep(3)
+            pump.stop(blocking=False)
+            time.sleep(stop_delay)
+            print("Pump 1")
+            pump.run_continuous([1], direction="B", blocking=False)
+            time.sleep(3)
+            pump.stop(blocking=False)
+            time.sleep(stop_delay)
+            print("Pump 2")
+            pump.run_continuous([2], direction="B", blocking=False)
+            time.sleep(3)
+            pump.stop(blocking=False)
+            time.sleep(stop_delay)
 
-        time.sleep(0.5)
-
-        print("\n── Blocking: precise 0.5 mL dispense ──")
-        pump.move(1, 0.5, "mL", "F", blocking=True)
+        # print("\n── Blocking: precise 0.5 mL dispense ──")
+        # pump.move(2, 0.5, "mL", "F", blocking=True)

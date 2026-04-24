@@ -347,7 +347,7 @@ class PumpWindow(QtWidgets.QMainWindow):
     # ── Connection ───────────────────────────────────────────────────────────
 
     def _toggle_connect(self):
-        if self._ser is None:
+        if self._ctrl is None:
             self._connect()
         else:
             self._disconnect()
@@ -424,16 +424,49 @@ class PumpWindow(QtWidgets.QMainWindow):
     def _send_all_settings(self):
         if not self._ctrl or not self._ctrl.connected:
             return
-        for i in range(3):
-            pid  = i + 1
-            unit = self._pump_unit[i]
-            area = self._pump_area[i]
-            # Temporarily update the controller's area/microsteps for this pump
-            self._ctrl._area       = area
-            self._ctrl._microsteps = self._microstepping
-            self._ctrl.set_speed(pid, self._speed_spin.value(), unit, blocking=True)
-            self._ctrl.set_accel(pid, self._accel_spin.value(), unit, blocking=True)
-        self.statusBar().showMessage("Settings sent to all pumps.")
+        self._send_settings_btn.setEnabled(False)
+        self.statusBar().showMessage("Sending settings…")
+
+        # Capture values now (on the main thread) before handing off
+        speed_val  = self._speed_spin.value()
+        accel_val  = self._accel_spin.value()
+        pump_units = list(self._pump_unit)
+        pump_areas = list(self._pump_area)
+        microsteps = self._microstepping
+        ctrl       = self._ctrl
+
+        def _do_send():
+            for i in range(3):
+                pid  = i + 1
+                unit = pump_units[i]
+                ctrl._area       = pump_areas[i]
+                ctrl._microsteps = microsteps
+                ctrl.set_speed(pid, speed_val, unit, blocking=True)
+                ctrl.set_accel(pid, accel_val, unit, blocking=True)
+
+        worker = QtCore.QThread(parent=self)
+        # Use a QObject to run the work inside the thread
+        class _Runner(QtCore.QObject):
+            done = QtCore.pyqtSignal()
+            def run(self_):
+                try:
+                    _do_send()
+                finally:
+                    self_.done.emit()
+
+        runner = _Runner()
+        runner.moveToThread(worker)
+        worker.started.connect(runner.run)
+
+        def _on_done():
+            self.statusBar().showMessage("Settings sent to all pumps.")
+            self._send_settings_btn.setEnabled(True)
+            worker.quit()  # ask the thread to exit; don't block with wait()
+
+        runner.done.connect(_on_done)
+        self._workers.append(worker)
+        worker.finished.connect(lambda: self._workers.remove(worker) if worker in self._workers else None)
+        worker.start()
 
     def _dispatch(self, cmd: str):
         if self._command_in_flight:
@@ -444,10 +477,30 @@ class PumpWindow(QtWidgets.QMainWindow):
         worker.reply.connect(lambda r: (print(f"[RX] {r}"), self.statusBar().showMessage(f"Arduino: {r}")))
         worker.finished.connect(lambda: self._on_worker_done(worker))
         self._workers.append(worker)
+
+        # Safety net: release the lock after 5 s even if the worker hangs
+        # (e.g. serial port becomes unresponsive on macOS)
+        timer = QtCore.QTimer(self)
+        timer.setSingleShot(True)
+        timer.timeout.connect(lambda: self._on_worker_timeout(worker, timer))
+        worker._timeout_timer = timer
+        timer.start(5000)
+
         worker.start()
 
     def _on_worker_done(self, worker: CommandWorker):
+        timer = getattr(worker, "_timeout_timer", None)
+        if timer is not None:
+            timer.stop()
         self._command_in_flight = False
+        if worker in self._workers:
+            self._workers.remove(worker)
+
+    def _on_worker_timeout(self, worker: CommandWorker, timer: QtCore.QTimer):
+        timer.stop()
+        if self._command_in_flight:
+            self.statusBar().showMessage("Warning: command timed out – serial may be unresponsive.")
+            self._command_in_flight = False
         if worker in self._workers:
             self._workers.remove(worker)
 
