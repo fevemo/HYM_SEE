@@ -445,14 +445,20 @@ class ControlWidget(QWidget):
         self.pump2_speed = QLineEdit("1.0")
         layout.addWidget(self.pump2_speed)
 
-        self.run_p1 = QPushButton("Run pump 1")
-        self.run_p2 = QPushButton("Run pump 2")
-        self.run_both = QPushButton("Run both pumps")
+        self.run_p1_fwd = QPushButton("Pump 1 ▶ Forward")
+        self.run_p1_bwd = QPushButton("Pump 1 ◀ Backward")
+        self.run_p2_fwd = QPushButton("Pump 2 ▶ Forward")
+        self.run_p2_bwd = QPushButton("Pump 2 ◀ Backward")
+        self.run_both_fwd = QPushButton("Both pumps ▶ Forward")
+        self.run_both_bwd = QPushButton("Both pumps ◀ Backward")
         self.stop_all = QPushButton("Stop all pumps")
 
-        layout.addWidget(self.run_p1)
-        layout.addWidget(self.run_p2)
-        layout.addWidget(self.run_both)
+        layout.addWidget(self.run_p1_fwd)
+        layout.addWidget(self.run_p1_bwd)
+        layout.addWidget(self.run_p2_fwd)
+        layout.addWidget(self.run_p2_bwd)
+        layout.addWidget(self.run_both_fwd)
+        layout.addWidget(self.run_both_bwd)
         layout.addWidget(self.stop_all)
 
         self.setLayout(layout)
@@ -480,16 +486,28 @@ class ControlWidget(QWidget):
             self.register_reference
         )
 
-        self.run_p1.clicked.connect(
-            self.run_pump1
+        self.run_p1_fwd.clicked.connect(
+            lambda: self.run_pump(1, 'F')
         )
 
-        self.run_p2.clicked.connect(
-            self.run_pump2
+        self.run_p1_bwd.clicked.connect(
+            lambda: self.run_pump(1, 'B')
         )
 
-        self.run_both.clicked.connect(
-            self.run_both_pumps
+        self.run_p2_fwd.clicked.connect(
+            lambda: self.run_pump(2, 'F')
+        )
+
+        self.run_p2_bwd.clicked.connect(
+            lambda: self.run_pump(2, 'B')
+        )
+
+        self.run_both_fwd.clicked.connect(
+            lambda: self.run_both_pumps('F')
+        )
+
+        self.run_both_bwd.clicked.connect(
+            lambda: self.run_both_pumps('B')
         )
 
         self.stop_all.clicked.connect(
@@ -603,28 +621,25 @@ class ControlWidget(QWidget):
         except ValueError:
             pass
 
-    def run_pump1(self):
+    def run_pump(self, pump_id, direction):
 
         if self.pump is None:
             return
 
-        self.pump.run_continuous([1], direction='B', blocking=False)
+        self.pump.run_continuous(
+            [pump_id],
+            direction=direction,
+            blocking=False
+        )
 
-    def run_pump2(self):
-
-        if self.pump is None:
-            return
-
-        self.pump.run_continuous([2], direction='B', blocking=False)
-
-    def run_both_pumps(self):
+    def run_both_pumps(self, direction):
 
         if self.pump is None:
             return
 
         self.pump.run_continuous(
             [1, 2],
-            direction='B',
+            direction=direction,
             blocking=False
         )
 
