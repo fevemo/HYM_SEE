@@ -460,20 +460,20 @@ class ControlWidget(QWidget):
 
         p1_row = QHBoxLayout()
         p1_row.addWidget(QLabel("Pump 1"))
-        p1_row.addWidget(self.run_p1_fwd)
         p1_row.addWidget(self.run_p1_bwd)
+        p1_row.addWidget(self.run_p1_fwd)
         layout.addLayout(p1_row)
 
         p2_row = QHBoxLayout()
         p2_row.addWidget(QLabel("Pump 2"))
-        p2_row.addWidget(self.run_p2_fwd)
         p2_row.addWidget(self.run_p2_bwd)
+        p2_row.addWidget(self.run_p2_fwd)
         layout.addLayout(p2_row)
 
         both_row = QHBoxLayout()
         both_row.addWidget(QLabel("Both"))
-        both_row.addWidget(self.run_both_fwd)
         both_row.addWidget(self.run_both_bwd)
+        both_row.addWidget(self.run_both_fwd)
         layout.addLayout(both_row)
 
         layout.addWidget(self.switch_btn)
@@ -505,27 +505,27 @@ class ControlWidget(QWidget):
         )
 
         self.run_p1_fwd.clicked.connect(
-            lambda: self.run_pump(1, 'F')
-        )
-
-        self.run_p1_bwd.clicked.connect(
             lambda: self.run_pump(1, 'B')
         )
 
-        self.run_p2_fwd.clicked.connect(
-            lambda: self.run_pump(2, 'F')
+        self.run_p1_bwd.clicked.connect(
+            lambda: self.run_pump(1, 'F')
         )
 
-        self.run_p2_bwd.clicked.connect(
+        self.run_p2_fwd.clicked.connect(
             lambda: self.run_pump(2, 'B')
         )
 
+        self.run_p2_bwd.clicked.connect(
+            lambda: self.run_pump(2, 'F')
+        )
+
         self.run_both_fwd.clicked.connect(
-            lambda: self.run_both_pumps('F')
+            lambda: self.run_both_pumps('B')
         )
 
         self.run_both_bwd.clicked.connect(
-            lambda: self.run_both_pumps('B')
+            lambda: self.run_both_pumps('F')
         )
 
         self.switch_btn.clicked.connect(
