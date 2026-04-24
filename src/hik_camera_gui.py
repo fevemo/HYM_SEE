@@ -588,7 +588,7 @@ class ControlWidget(QWidget):
 
         try:
             speed = float(self.pump1_speed.text())
-            self.pump.set_speed(1, speed, "uL")
+            self.pump.set_speed(1, speed, "uL", blocking=False)
         except ValueError:
             pass
 
@@ -599,7 +599,7 @@ class ControlWidget(QWidget):
 
         try:
             speed = float(self.pump2_speed.text())
-            self.pump.set_speed(2, speed, "uL")
+            self.pump.set_speed(2, speed, "uL", blocking=False)
         except ValueError:
             pass
 
