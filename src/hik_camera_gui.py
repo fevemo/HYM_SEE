@@ -825,14 +825,15 @@ def launch_camera(viewer):
                 - widget.reference.astype(np.int16)
             )
 
-            # denoise with a small median filter
-            diff = median_filter(diff, size=3)
-
             sub_layer.data = diff
 
-            # ---- thresholding on live - reference ----
-            # particles are darker than the reference -> diff is negative
-            mask = (diff < -widget.threshold).astype(np.uint8)
+            # downsample by 8, median filter, threshold, then upsample mask
+            diff_small = diff[::8, ::8]
+            diff_small = median_filter(diff_small, size=3)
+            mask_small = (diff_small < -widget.threshold).astype(np.uint8)
+            mask = np.kron(mask_small, np.ones((8, 8), dtype=np.uint8))
+            # trim any extra pixels from rounding
+            mask = mask[:diff.shape[0], :diff.shape[1]]
         else:
             # no reference yet: nothing to threshold
             mask = np.zeros_like(img, dtype=np.uint8)
