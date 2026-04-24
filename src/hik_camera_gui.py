@@ -381,6 +381,10 @@ class ControlWidget(QWidget):
         self.reference = None
         self.reference_index = 1
 
+        # tracks which single pump is running for Switch (1, 2, or None)
+        self._active_pump = None
+        self._active_dir  = 'B'
+
         layout = QVBoxLayout()
 
         # ==================================================
@@ -445,20 +449,34 @@ class ControlWidget(QWidget):
         self.pump2_speed = QLineEdit("1.0")
         layout.addWidget(self.pump2_speed)
 
-        self.run_p1_fwd = QPushButton("Pump 1 ▶ Forward")
-        self.run_p1_bwd = QPushButton("Pump 1 ◀ Backward")
-        self.run_p2_fwd = QPushButton("Pump 2 ▶ Forward")
-        self.run_p2_bwd = QPushButton("Pump 2 ◀ Backward")
-        self.run_both_fwd = QPushButton("Both pumps ▶ Forward")
-        self.run_both_bwd = QPushButton("Both pumps ◀ Backward")
-        self.stop_all = QPushButton("Stop all pumps")
+        self.run_p1_fwd  = QPushButton("▶ Fwd")
+        self.run_p1_bwd  = QPushButton("◀ Bwd")
+        self.run_p2_fwd  = QPushButton("▶ Fwd")
+        self.run_p2_bwd  = QPushButton("◀ Bwd")
+        self.run_both_fwd = QPushButton("▶ Fwd")
+        self.run_both_bwd = QPushButton("◀ Bwd")
+        self.stop_all    = QPushButton("Stop all pumps")
+        self.switch_btn  = QPushButton("Switch pump")
 
-        layout.addWidget(self.run_p1_fwd)
-        layout.addWidget(self.run_p1_bwd)
-        layout.addWidget(self.run_p2_fwd)
-        layout.addWidget(self.run_p2_bwd)
-        layout.addWidget(self.run_both_fwd)
-        layout.addWidget(self.run_both_bwd)
+        p1_row = QHBoxLayout()
+        p1_row.addWidget(QLabel("Pump 1"))
+        p1_row.addWidget(self.run_p1_fwd)
+        p1_row.addWidget(self.run_p1_bwd)
+        layout.addLayout(p1_row)
+
+        p2_row = QHBoxLayout()
+        p2_row.addWidget(QLabel("Pump 2"))
+        p2_row.addWidget(self.run_p2_fwd)
+        p2_row.addWidget(self.run_p2_bwd)
+        layout.addLayout(p2_row)
+
+        both_row = QHBoxLayout()
+        both_row.addWidget(QLabel("Both"))
+        both_row.addWidget(self.run_both_fwd)
+        both_row.addWidget(self.run_both_bwd)
+        layout.addLayout(both_row)
+
+        layout.addWidget(self.switch_btn)
         layout.addWidget(self.stop_all)
 
         self.setLayout(layout)
@@ -508,6 +526,10 @@ class ControlWidget(QWidget):
 
         self.run_both_bwd.clicked.connect(
             lambda: self.run_both_pumps('B')
+        )
+
+        self.switch_btn.clicked.connect(
+            self.switch_pump
         )
 
         self.stop_all.clicked.connect(
@@ -606,7 +628,7 @@ class ControlWidget(QWidget):
 
         try:
             speed = float(self.pump1_speed.text())
-            self.pump.set_speed(1, speed, "uL", blocking=False)
+            self.pump.set_speed(1, speed, "uL", blocking=True)
         except ValueError:
             pass
 
@@ -617,7 +639,7 @@ class ControlWidget(QWidget):
 
         try:
             speed = float(self.pump2_speed.text())
-            self.pump.set_speed(2, speed, "uL", blocking=False)
+            self.pump.set_speed(2, speed, "uL", blocking=True)
         except ValueError:
             pass
 
@@ -626,10 +648,13 @@ class ControlWidget(QWidget):
         if self.pump is None:
             return
 
+        self._active_pump = pump_id
+        self._active_dir  = direction
+
         self.pump.run_continuous(
             [pump_id],
             direction=direction,
-            blocking=False
+            blocking=True
         )
 
     def run_both_pumps(self, direction):
@@ -637,10 +662,32 @@ class ControlWidget(QWidget):
         if self.pump is None:
             return
 
+        self._active_pump = None  # both running, switch not meaningful
         self.pump.run_continuous(
             [1, 2],
             direction=direction,
-            blocking=False
+            blocking=True
+        )
+
+    def switch_pump(self):
+        """Stop the running pump and start the other one."""
+
+        if self.pump is None:
+            return
+
+        if self._active_pump is None:
+            print("Switch: no single pump is active.")
+            return
+
+        other = 2 if self._active_pump == 1 else 1
+        direction = self._active_dir
+
+        self.pump.stop(blocking=True)
+        self._active_pump = other
+        self.pump.run_continuous(
+            [other],
+            direction=direction,
+            blocking=True
         )
 
     def stop_pumps(self):
@@ -648,7 +695,7 @@ class ControlWidget(QWidget):
         if self.pump is None:
             return
 
-        self.pump.stop(blocking=False)
+        self.pump.stop(blocking=True)
 
 
 # ==========================================================
