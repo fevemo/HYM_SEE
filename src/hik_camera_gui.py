@@ -437,6 +437,36 @@ class ControlWidget(QWidget):
         layout.addWidget(self.ref_label)
 
         # ==================================================
+        # Thresholding controls
+        # ==================================================
+        layout.addWidget(QLabel("Threshold (mask < value)"))
+
+        thr_row = QHBoxLayout()
+        self.thr_slider = QSlider(Qt.Horizontal)
+        self.thr_slider.setMinimum(0)
+        self.thr_slider.setMaximum(255)
+        self.thr_slider.setValue(50)
+
+        self.thr_edit = QLineEdit("50")
+        self.thr_edit.setFixedWidth(60)
+
+        thr_row.addWidget(self.thr_slider)
+        thr_row.addWidget(self.thr_edit)
+        layout.addLayout(thr_row)
+
+        layout.addWidget(QLabel("Max allowed mask area (pixels)"))
+        self.area_limit_edit = QLineEdit("5000")
+        layout.addWidget(self.area_limit_edit)
+
+        self.area_label = QLabel("Mask area: 0 px")
+        layout.addWidget(self.area_label)
+
+        # exposed for refresh()
+        self.threshold = 50
+        self.area_limit = 5000
+        self.last_area = 0
+
+        # ==================================================
         # Pump controls
         # ==================================================
 
@@ -543,6 +573,18 @@ class ControlWidget(QWidget):
 
         self.pump2_speed.editingFinished.connect(
             self.set_pump2_speed
+        )
+
+        self.thr_slider.valueChanged.connect(
+            self.thr_slider_changed
+        )
+
+        self.thr_edit.returnPressed.connect(
+            self.thr_edit_changed
+        )
+
+        self.area_limit_edit.editingFinished.connect(
+            self.area_limit_changed
         )
 
     # ======================================================
@@ -722,6 +764,14 @@ def launch_camera(viewer):
         visible=False
     )
 
+    mask_layer = viewer.add_labels(
+        np.zeros((2048, 3072), dtype=np.uint8),
+        name="Mask",
+        opacity=0.5,
+    )
+    # start green
+    mask_layer.color = {0: "transparent", 1: "green"}
+
     widget = ControlWidget(cam)
 
     viewer.window.add_dock_widget(
@@ -731,6 +781,9 @@ def launch_camera(viewer):
 
     # ------------------------------------------------------
     widget.timer = QTimer()
+
+    # track current mask color so we don't reassign every frame
+    mask_state = {"color": "green"}
 
     def refresh():
 
@@ -749,6 +802,22 @@ def launch_camera(viewer):
             )
 
             sub_layer.data = diff
+
+        # ---- thresholding ----
+        mask = (img < widget.threshold).astype(np.uint8)
+        mask_layer.data = mask
+
+        area = int(mask.sum())
+        widget.last_area = area
+
+        new_color = "red" if area > widget.area_limit else "green"
+        if new_color != mask_state["color"]:
+            mask_layer.color = {0: "transparent", 1: new_color}
+            mask_state["color"] = new_color
+
+        widget.area_label.setText(
+            f"Mask area: {area} px ({new_color})"
+        )
 
     widget.timer.timeout.connect(refresh)
     widget.timer.start(30)
