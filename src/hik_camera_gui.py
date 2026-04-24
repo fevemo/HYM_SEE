@@ -439,15 +439,16 @@ class ControlWidget(QWidget):
         # ==================================================
         # Pump controls
         # ==================================================
-        layout.addWidget(QLabel("Pump 1 speed (µL/s)"))
 
-        self.pump1_speed = QLineEdit("1.0")
-        layout.addWidget(self.pump1_speed)
-
-        layout.addWidget(QLabel("Pump 2 speed (µL/s)"))
+        layout.addWidget(QLabel("Top pump speed (µL/s)"))
 
         self.pump2_speed = QLineEdit("1.0")
         layout.addWidget(self.pump2_speed)
+
+        layout.addWidget(QLabel("Bottom pump speed (µL/s)"))
+
+        self.pump1_speed = QLineEdit("1.0")
+        layout.addWidget(self.pump1_speed)
 
         self.run_p1_fwd  = QPushButton("▶ Fwd")
         self.run_p1_bwd  = QPushButton("◀ Bwd")
@@ -458,17 +459,17 @@ class ControlWidget(QWidget):
         self.stop_all    = QPushButton("Stop all pumps")
         self.switch_btn  = QPushButton("Switch pump")
 
-        p1_row = QHBoxLayout()
-        p1_row.addWidget(QLabel("Pump 1"))
-        p1_row.addWidget(self.run_p1_bwd)
-        p1_row.addWidget(self.run_p1_fwd)
-        layout.addLayout(p1_row)
-
         p2_row = QHBoxLayout()
-        p2_row.addWidget(QLabel("Pump 2"))
+        p2_row.addWidget(QLabel("Top pump"))
         p2_row.addWidget(self.run_p2_bwd)
         p2_row.addWidget(self.run_p2_fwd)
         layout.addLayout(p2_row)
+
+        p1_row = QHBoxLayout()
+        p1_row.addWidget(QLabel("Bottom pump"))
+        p1_row.addWidget(self.run_p1_bwd)
+        p1_row.addWidget(self.run_p1_fwd)
+        layout.addLayout(p1_row)
 
         both_row = QHBoxLayout()
         both_row.addWidget(QLabel("Both"))
