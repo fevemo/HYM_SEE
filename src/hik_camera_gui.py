@@ -662,6 +662,28 @@ class ControlWidget(QWidget):
         self.reference_index += 1
 
     # ======================================================
+    # Threshold functions
+    # ======================================================
+    def thr_slider_changed(self, value):
+        self.threshold = value
+        self.thr_edit.setText(str(value))
+
+    def thr_edit_changed(self):
+        try:
+            value = int(self.thr_edit.text())
+            value = max(0, min(255, value))
+            self.thr_slider.setValue(value)
+            self.threshold = value
+        except ValueError:
+            self.thr_edit.setText(str(self.threshold))
+
+    def area_limit_changed(self):
+        try:
+            self.area_limit = int(self.area_limit_edit.text())
+        except ValueError:
+            self.area_limit_edit.setText(str(self.area_limit))
+
+    # ======================================================
     # Pump functions
     # ======================================================
     def set_pump1_speed(self):
