@@ -49,5 +49,18 @@ Make sure the virtual environment is activated (see Setup above) before running.
 python src/pump_gui.py
 ```
 
+## Limitations / To-Dos:
+1.	Software:
+-	build on the already existing particle recognition and implement an automated feedback loop to the pumps to steer the particles to the correct outlet channel automatically.
+2.	Hardware components:
+a.	Microfluidics:
+-	Fine tuning of the pumps with adaptation of the pump’s response time for a more accurate sorting mechanism
+-	Fine tuning of the microfluidic chamber width to optimise the response time to the pump system
+-	The microfluid chip can be improved with a more optimised manufacturing process to achieve smoother edges.
+-	a better inlet mechanism could be implemented to sort larger amounts of the sample.
+b.	Optical Setup:
+-	Implement a Fluorescence module for sorting based on spectral readout.
+
+
 
 
