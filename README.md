@@ -57,6 +57,10 @@ install.bat
 
 The install scripts will set up a Python 3.11 virtual environment and install all dependencies automatically.
 
+**For camera control:**
+
+Installation of the Hikrobotics MVS control software which includes the SDK installation.
+
 ## Run
 
 Make sure the virtual environment is activated (see Setup above) before running. You need to do this each time you open a new terminal. Then run the desired code. 
