@@ -7,6 +7,7 @@ The code provides visualization of the image caputred by a XXX camera with simul
 ## List of materials
 
 1. Poseidon pump system 
+1. Open UC2 
 
 ## Setup
 
