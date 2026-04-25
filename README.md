@@ -31,6 +31,9 @@ The microfluidics [channel design](https://github.com/fevemo/HYM_SEE/blob/main/m
 ## Pump control
 The Poseidon pumps were used in their original configuration and controled via serial commands from a custom python API. The API converts real-time control commands such as forward, back, stop, etc. into the command strings the Poseion arduino system expects. This was a great way to get up and running quickly but the serial comunication starts having issues as soon as several commands are sent in quick successsion. In the future it would be better to modify the pump controller to accomodate better real-time control.
 
+## Camera control
+The Hikrobot camera was controlled using the USB3 Vision protocol and using a custom API. Our API was built on an already existing API made available by Hikrobot (src/Python) and adapted for our specific use case. This API allows the connection to the camera, the start of acquisition, the change of exposure time, and the registering of a frame.
+
 ## Graphical User Interface
 The GUI was made using napari as the main block. The camera and the syringe pumps were connected to the PC, and the communication was managed using Python. New frames were acquired in real time and used to update a napari layer, which enabled real-time visualization of the microfluidic chip. Some basic functions were implemented for camera control, such as the ability to change the exposure time of the camera and choose a folder in the PC for .tiff snap capture saving.
 
