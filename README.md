@@ -14,8 +14,8 @@ The microscope was build using the [OpenUC2 Corebox](https://openuc2.com/product
 
 ![HYM_SEE_Setup](Illustrations/HYC_TEAMSEE_Setup.jpeg)
 
-## Microfluidics
-
+## Microfluidics design
+The microfluidics [channel design](https://github.com/fevemo/HYM_SEE/blob/main/microfluidic-channel.stl) was lasercut into two layers of double sided tape, after which it was sticked on a glass microscopy slide. On top a PMMA layer with lasercut in and outlets of 2.5mm (lasercut) was sticked on the top of the chip.
 
 ## Setup
 
