@@ -23,7 +23,7 @@ The microscope was build using the [OpenUC2 Corebox](https://openuc2.com/product
 ![HYM_SEE_Setup](Illustrations/HYC_TEAMSEE_Setup.jpeg)
 
 ## Microfluidics design
-The microfluidics [channel design](https://github.com/fevemo/HYM_SEE/blob/main/microfluidic-channel.stl) was lasercut into two layers of double sided tape, after which it was sticked on a glass microscopy slide. On top, a PMMA layer with in and outlets of 2.5mm (lasercut) was sticked on the top of the chip. ChipShop adaptors were inserted into the in and outlets to attach the tubing to the chip and connect them with the two syringe pumps.
+The microfluidics [channel design](https://github.com/fevemo/HYM_SEE/blob/main/microfluidic-channel.stl) was lasercut into two layers of double sided tape, after which it was sticked on a glass microscopy slide. On top, a PMMA layer with in and outlets of 2.5mm (lasercut) was sticked on the top of the chip. ChipShop adaptors were inserted into the in and outlets to attach the tubing to the chip and connect them with the two syringe pumps. The inlet of the chip was connected with an open syringe in which the diluted particle sample can be loaded.
 
 ## Setup
 
