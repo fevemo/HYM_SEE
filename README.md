@@ -10,7 +10,7 @@ The code provides visualization of the image caputred by a XXX camera with simul
 1. Open UC2 
 
 ## Optics
-The microscope was build using the [OpenUC2 Corebox] (https://openuc2.com/product-overview-2/). Documentation about the corebox can be found [here] (https://docs.openuc2.com/usage/disc/corebox/en/core_intro/). The optical setup was adapted to be able to fit on a Melles Griot Stage for XY translation while fixing the sample with a Thorlabs post holder. 
+The microscope was build using the [OpenUC2 Corebox](https://openuc2.com/product-overview-2/). Documentation about the corebox can be found [here](https://docs.openuc2.com/usage/disc/corebox/en/core_intro/). The optical setup was adapted to be able to fit on a Melles Griot Stage for XY translation while fixing the sample with a Thorlabs post holder. 
 
 ![HYM_SEE_Setup](Illustrations/HYC_TEAMSEE_Setup.jpeg)
 
