@@ -6,16 +6,16 @@ The code provides visualization of the image caputred by a Hikrobotics camera wi
 
 ## List of materials
 
-1. [Poseidon pump system](https://github.com/pachterlab/poseidon)
-1. [OpenUC2 Corebox](https://openuc2.com/product-overview-2/)
-1. [Hikrobotics mv-cs060-10um-pro](https://www.hikrobotics.com/en/machinevision/productdetail/?id=5715)
-1. 3x 1ml BD plastic syringe (18mm2)
-1. [2m of Tygon tube ND-100-80 (ID: 0.04 in, OD: 0.07 in)](https://darwin-microfluidics.com/products/tygon-nd-100-80-micro-tubing)
-1. [3 Tube Tuck Luer Connector for 1/16 tubing (1 pack)](https://www.microfluidic-chipshop.com/connectors/1243-2683-tube-tuck-mini-luer-connector-for-116-tubing-fluidic-1581.html#/20-material-tpe/26-color-blue)
-1. XY stage with M6 holes
-1. [Custom open UC2 adapter plate for the XY stage](https://github.com/fevemo/HYM_SEE/blob/main/adapter_base_puzzle_v3.stl)
-
-
+-  [Poseidon pump system](https://github.com/pachterlab/poseidon)
+-  [OpenUC2 Corebox](https://openuc2.com/product-overview-2/)
+-  [Hikrobotics mv-cs060-10um-pro](https://www.hikrobotics.com/en/machinevision/productdetail/?id=5715)
+-  [3x 1ml BD plastic syringe](https://www.digikey.pt/short/93zf92hf)
+-  [2m of Tygon tube ND-100-80 (ID: 0.04 in, OD: 0.07 in)](https://darwin-microfluidics.com/products/tygon-nd-100-80-micro-tubing)
+-  [3 Tube Tuck Luer Connector for 1/16 tubing (1 pack)](https://www.microfluidic-chipshop.com/connectors/1243-2683-tube-tuck-mini-luer-connector-for-116-tubing-fluidic-158-html#/20-material-tpe/26-color-blue)
+-  [Custom open UC2 adapter plate for the XY stage](https://github.com/fevemo/HYM_SEE/blob/main/adapter_base_puzzle_v3.stl)
+-  XY stage with M6 holes
+-  Thorlabs slide holder
+-  Windows PC
 
 ## Optical setup
 The microscope was build using the [OpenUC2 Corebox](https://openuc2.com/product-overview-2/). Documentation about the corebox can be found [here](https://docs.openuc2.com/usage/disc/corebox/en/core_intro/). The optical setup was adapted to be able to fit on a Melles Griot Stage for XY translation while fixing the sample with a Thorlabs post holder. An [adaptor](https://github.com/fevemo/HYM_SEE/blob/main/adapter_base_puzzle_v3.stl) was designed to fix the openUC2 microscope to the stage. 
