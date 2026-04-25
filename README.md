@@ -14,7 +14,7 @@ The code provides visualization of the image caputred by a Hikrobotics camera wi
 -  [3 Tube Tuck Luer Connector for 1/16 tubing (1 pack)](https://www.microfluidic-chipshop.com/connectors/1243-2683-tube-tuck-mini-luer-connector-for-116-tubing-fluidic-158-html#/20-material-tpe/26-color-blue)
 -  [Custom open UC2 adapter plate for the XY stage](https://github.com/fevemo/HYM_SEE/blob/main/adapter_base_puzzle_v3.stl)
 -  XY stage with M6 holes.
--  Slide holder made with Thorlabs parts: Thorlabs post-holder, optical post and two CL5 parts to clamp the microfluidic chip, using an M6 screw.
+-  Slide holder made with Thorlabs parts: post-holder, optical post and two CL5 parts to clamp the microfluidic chip, using an M6 screw.
 -  Windows PC.
 
 ## Optical setup
