@@ -1,4 +1,12 @@
-Group SEE repository for the hack your microscope 2026 challenge
+# Hack your microscope 2026 challenge - Group See
+
+This repository contains all of the resources developed by group See for the HYM challenge 1: Organoid sorting with microfluidics.
+
+The code provides visualization of the image caputred by a XXX camera with simultaneous control of the poseidon syringe pump system. On top of the real-time image we compute a difference image with respect to a reference and then identify flowing particles based on a tunable threshold level. Once the mask is computed the size of the particles is estimated by counting the total masked pixels.
+
+## List of materials
+
+1. Poseidon pump system 
 
 ## Setup
 
