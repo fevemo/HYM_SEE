@@ -9,10 +9,13 @@ The code provides visualization of the image caputred by a XXX camera with simul
 1. Poseidon pump system 
 1. Open UC2 
 
-## Optics
-The microscope was build using the [OpenUC2 Corebox](https://openuc2.com/product-overview-2/). Documentation about the corebox can be found [here](https://docs.openuc2.com/usage/disc/corebox/en/core_intro/). The optical setup was adapted to be able to fit on a Melles Griot Stage for XY translation while fixing the sample with a Thorlabs post holder. 
+## Optical setup
+The microscope was build using the [OpenUC2 Corebox](https://openuc2.com/product-overview-2/). Documentation about the corebox can be found [here](https://docs.openuc2.com/usage/disc/corebox/en/core_intro/). The optical setup was adapted to be able to fit on a Melles Griot Stage for XY translation while fixing the sample with a Thorlabs post holder. An [adaptor](https://github.com/fevemo/HYM_SEE/blob/main/adapter_base_puzzle_v3.stl) was designed to fix the openUC2 microscope to the stage. 
 
 ![HYM_SEE_Setup](Illustrations/HYC_TEAMSEE_Setup.jpeg)
+
+## Microfluidics
+
 
 ## Setup
 
