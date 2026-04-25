@@ -31,6 +31,13 @@ The microfluidics [channel design](https://github.com/fevemo/HYM_SEE/blob/main/m
 ## Pump control
 The Poseidon pumps were used in their original configuration and controled via serial commands from a custom python API. The API converts real-time control commands such as forward, back, stop, etc. into the command strings the Poseion arduino system expects. This was a great way to get up and running quickly but the serial comunication starts having issues as soon as several commands are sent in quick successsion. In the future it would be better to modify the pump controller to accomodate better real-time control.
 
+## Graphical User Interface
+The GUI was made using napari as the main block. The camera and the syringe pumps were connected to the PC, and the communication was managed using Python. New frames were acquired in real time and used to update a napari layer, which enabled real-time visualization of the microfluidic chip. Some basic functions were implemented for camera control, such as the ability to change the exposure time of the camera and choose a folder in the PC for .tiff snap capture saving.
+
+The ability to programmatically control the two syringe pumps was also implemented on the GUI, with speed control for each one and the ability to choose the pulling or pushing motion of the syringe, creating a forward or backward fluidic motion. Finally, a referencing button was also added, which could be used to create a subtraction image (subtraction_image = live - reference), which could be used for the segmentation of beads in the FOV.
+
+![HYM_SEE_Setup](Illustrations/bead_segmentation.png)
+
 ## Setup
 
 **macOS/Linux:**
