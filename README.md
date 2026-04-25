@@ -13,14 +13,17 @@ The code provides visualization of the image caputred by a Hikrobotics camera wi
 1. [2m of Tygon tube ND-100-80 (ID: 0.04 in, OD: 0.07 in)](https://darwin-microfluidics.com/products/tygon-nd-100-80-micro-tubing)
 1. [3 Tube Tuck Luer Connector for 1/16 tubing (1 pack)](https://www.microfluidic-chipshop.com/connectors/1243-2683-tube-tuck-mini-luer-connector-for-116-tubing-fluidic-1581.html#/20-material-tpe/26-color-blue)
 1. XY stage with M6 holes
-1. Custom open UC2 adapter plate for
+1. [Custom open UC2 adapter plate for the XY stage](https://github.com/fevemo/HYM_SEE/blob/main/adapter_base_puzzle_v3.stl)
 
 
 
-## Optics
-The microscope was build using the [OpenUC2 Corebox](https://openuc2.com/product-overview-2/). Documentation about the corebox can be found [here](https://docs.openuc2.com/usage/disc/corebox/en/core_intro/). The optical setup was adapted to be able to fit on a Melles Griot Stage for XY translation while fixing the sample with a Thorlabs post holder. 
+## Optical setup
+The microscope was build using the [OpenUC2 Corebox](https://openuc2.com/product-overview-2/). Documentation about the corebox can be found [here](https://docs.openuc2.com/usage/disc/corebox/en/core_intro/). The optical setup was adapted to be able to fit on a Melles Griot Stage for XY translation while fixing the sample with a Thorlabs post holder. An [adaptor](https://github.com/fevemo/HYM_SEE/blob/main/adapter_base_puzzle_v3.stl) was designed to fix the openUC2 microscope to the stage. 
 
 ![HYM_SEE_Setup](Illustrations/HYC_TEAMSEE_Setup.jpeg)
+
+## Microfluidics design
+The microfluidics [channel design](https://github.com/fevemo/HYM_SEE/blob/main/microfluidic-channel.stl) was lasercut into two layers of double sided tape, after which it was sticked on a glass microscopy slide. On top, a PMMA layer with in and outlets of 2.5mm (lasercut) was sticked on the top of the chip. ChipShop adaptors were inserted into the in and outlets to attach the tubing to the chip and connect them with the two syringe pumps.
 
 ## Setup
 
