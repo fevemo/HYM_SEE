@@ -8,7 +8,7 @@ The code provides visualization of the image caputred by a Hikrobotics camera wi
 
 -  [Poseidon pump system](https://github.com/pachterlab/poseidon)
 -  [OpenUC2 Corebox](https://openuc2.com/product-overview-2/)
--  [Hikrobotics mv-cs060-10um-pro](https://www.hikrobotics.com/en/machinevision/productdetail/?id=5715)
+-  [Hikrobotics MV-CS060-10UM-PRO](https://www.hikrobotics.com/en/machinevision/productdetail/?id=5715)
 -  [3x 1ml BD plastic syringe](https://www.digikey.pt/short/93zf92hf)
 -  [2m of Tygon tube ND-100-80 (ID: 0.04 in, OD: 0.07 in)](https://darwin-microfluidics.com/products/tygon-nd-100-80-micro-tubing)
 -  [3 Tube Tuck Luer Connector for 1/16 tubing (1 pack)](https://www.microfluidic-chipshop.com/connectors/1243-2683-tube-tuck-mini-luer-connector-for-116-tubing-fluidic-158-html#/20-material-tpe/26-color-blue)
